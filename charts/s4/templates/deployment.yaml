@@ -56,6 +56,12 @@ spec:
           volumeMounts:
             - name: s4-data
               mountPath: /var/lib/ceph/radosgw
+            {{- if .Values.ceph.config.enabled }}
+            - name: ceph-config
+              mountPath: /etc/ceph/ceph.conf
+              subPath: ceph.conf
+              readOnly: true
+            {{- end }}
             {{- if .Values.storage.localStorage.enabled }}
             - name: s4-local-storage
               mountPath: /opt/app-root/src/data
@@ -87,6 +93,11 @@ spec:
         - name: s4-data
           persistentVolumeClaim:
             claimName: {{ include "s4.dataPvcName" . }}
+        {{- if .Values.ceph.config.enabled }}
+        - name: ceph-config
+          configMap:
+            name: {{ include "s4.fullname" . }}-ceph-config
+        {{- end }}
         {{- if .Values.storage.localStorage.enabled }}
         - name: s4-local-storage
           persistentVolumeClaim:

@@ -1,0 +1,34 @@
+{{- if .Values.ceph.config.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "s4.fullname" . }}-ceph-config
+  labels:
+    {{- include "s4.labels" . | nindent 4 }}
+  {{- with (include "s4.annotations" .) }}
+  annotations:
+    {{- . | nindent 4 }}
+  {{- end }}
+data:
+  ceph.conf: |
+    [client]
+    rgw backend store = dbstore
+    rgw config store = dbstore
+    rgw filter = posix
+
+    rgw_posix_base_path = /var/lib/ceph/radosgw/buckets
+    rgw_posix_database_root = /var/lib/ceph/radosgw/db
+    rgw_posix_tmp_path = /var/lib/ceph/radosgw/tmp
+
+    admin socket = /var/lib/ceph/radosgw/ceph-$cluster-$name.asok
+
+    rgw_enable_apis = s3, s3website, sts, sns, notifications
+    rgw_enable_usage_log = false
+    rgw_enable_ops_log = false
+
+    # File descriptor leak mitigation settings
+    rgw_max_concurrent_requests = {{ .Values.ceph.config.rgw_max_concurrent_requests }}
+    rgw_thread_pool_size = {{ .Values.ceph.config.rgw_thread_pool_size }}
+    rgw_op_thread_timeout = {{ .Values.ceph.config.rgw_op_thread_timeout }}
+    rgw_max_chunk_size = {{ .Values.ceph.config.rgw_max_chunk_size }}
+{{- end }}

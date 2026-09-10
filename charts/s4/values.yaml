@@ -92,6 +92,22 @@ server:
   # -- Server bind address
   ip: '0.0.0.0'
 
+# Ceph RGW configuration (file descriptor leak mitigation)
+ceph:
+  config:
+    # -- Enable custom Ceph configuration
+    enabled: false
+    # -- Maximum concurrent requests (default: 1024)
+    # Lower values reduce file descriptor consumption
+    rgw_max_concurrent_requests: 100
+    # -- Thread pool size (default: 512)
+    # Lower values reduce concurrent operations
+    rgw_thread_pool_size: 64
+    # -- Operation timeout in seconds
+    rgw_op_thread_timeout: 30
+    # -- Maximum chunk size in bytes
+    rgw_max_chunk_size: 4194304
+
 # Resource limits and requests
 resources:
   requests:
