@@ -2,7 +2,7 @@ apiVersion: v2
 name: s4
 description: S4 (Super Simple Storage Service) - A lightweight S3-compatible storage solution
 type: application
-version: 0.1.0
+version: 0.2.0
 appVersion: "0.3.2"
 keywords:
   - s3
@@ -10,8 +10,9 @@ keywords:
   - object-storage
   - ceph
   - rgw
-home: https://github.com/rh-aiservices-bu/s4
+home: https://github.com/rhpds/s4
 sources:
-  - https://github.com/rh-aiservices-bu/s4
+  - https://github.com/rhpds/s4
 maintainers:
+  - name: Red Hat Demo Platform Services
   - name: Red Hat AI Services BU
