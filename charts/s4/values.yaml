@@ -107,6 +107,13 @@ ceph:
     rgw_op_thread_timeout: 30
     # -- Maximum chunk size in bytes
     rgw_max_chunk_size: 4194304
+  # File descriptor limits
+  ulimit:
+    # -- Enable ulimit override
+    enabled: false
+    # -- Maximum number of open files (soft/hard limit)
+    # Kernel hard limit is typically 524288 on OpenShift
+    nofile: 262144
 
 # Resource limits and requests
 resources:

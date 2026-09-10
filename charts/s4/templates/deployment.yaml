@@ -37,6 +37,12 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.ceph.ulimit.enabled }}
+          command:
+            - /bin/sh
+            - -c
+            - ulimit -n {{ .Values.ceph.ulimit.nofile }} && exec /opt/ceph-container/bin/entrypoint.sh
+          {{- end }}
           ports:
             - name: s3-api
               containerPort: 7480
