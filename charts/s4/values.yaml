@@ -113,7 +113,7 @@ ceph:
     enabled: false
     # -- Maximum number of open files (soft/hard limit)
     # Kernel hard limit is typically 524288 on OpenShift
-    nofile: 262144
+    nofile: 65536
 
 # Resource limits and requests
 resources:
